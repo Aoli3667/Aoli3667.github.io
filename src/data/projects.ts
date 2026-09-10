@@ -9,8 +9,11 @@ import slimeyTraversal from "../assets/projects/slimey-traversal.png";
 import egakuCharacter from "../assets/projects/egaku-character.png";
 import egakuRunner from "../assets/projects/egaku-runner.png";
 import egakuPainter from "../assets/projects/egaku-painter.png";
+import urbanxExploration from "../assets/projects/urbanx-exploration.png";
+import urbanxCctv from "../assets/projects/urbanx-cctv.png";
+import urbanxSettings from "../assets/projects/urbanx-settings.png";
 
-export type ProjectSlug = "restart" | "slimey" | "egaku" | "choices";
+export type ProjectSlug = "restart" | "slimey" | "egaku" | "urban-x";
 
 export interface ProjectMedia {
   src: ImageMetadata;
@@ -35,7 +38,10 @@ export interface Project {
   cover?: ProjectMedia;
   media: ProjectMedia[];
   sections: ProjectSection[];
-  github?: string;
+  externalLink?: {
+    href: string;
+    label: LocalizedText;
+  };
   accent: "cyan" | "yellow" | "coral" | "violet";
 }
 
@@ -141,7 +147,10 @@ export const projects: Project[] = [
         },
       },
     ],
-    github: "https://github.com/Aoli3667/Slimey",
+    externalLink: {
+      href: "https://github.com/Aoli3667/Slimey",
+      label: { en: "View on GitHub", "zh-TW": "前往 GitHub" },
+    },
     accent: "yellow",
   },
   {
@@ -190,43 +199,76 @@ export const projects: Project[] = [
     accent: "coral",
   },
   {
-    slug: "choices",
+    slug: "urban-x",
     index: "04",
-    title: "Choices",
-    eyebrow: { en: "Simulation visual novel", "zh-TW": "模擬型視覺小說" },
+    title: "Urban X",
+    eyebrow: { en: "First-person horror exploration", "zh-TW": "第一人稱恐怖探索" },
     summary: {
-      en: "A systems-driven visual novel where choices reshape stats, available events, and the story that follows.",
-      "zh-TW": "一款由系統推動的視覺小說：玩家選擇會改變數值、可用事件與後續故事。",
+      en: "A first-person urban-exploration prototype about filming the mystery inside an abandoned high school.",
+      "zh-TW": "一款第一人稱都市探索原型：拿起攝影機，揭開廢棄高中裡的失蹤謎團。",
     },
-    role: { en: "Lead programmer", "zh-TW": "Lead Programmer" },
-    tags: ["Unity", "C#", "CSV pipeline", "Narrative systems", "Simulation"],
-    media: [],
+    role: { en: "Programmer", "zh-TW": "程式設計" },
+    tags: ["Unity", "C#", "Timeline tooling", "Custom animation events", "Save system"],
+    cover: media(
+      urbanxExploration,
+      "Urban X first-person view of a dark school courtyard through a recording camera overlay",
+      "Urban X 第一人稱畫面：透過錄影介面探索昏暗的校園庭院",
+      "The recording-camera view frames an investigation through an abandoned school.",
+      "錄影攝影機視角串起玩家對廢棄校園的調查。",
+    ),
+    media: [
+      media(
+        urbanxExploration,
+        "Urban X first-person view of a dark school courtyard through a recording camera overlay",
+        "Urban X 第一人稱畫面：透過錄影介面探索昏暗的校園庭院",
+        "The player records clues while exploring the school grounds.",
+        "玩家在探索校園時以攝影機記錄線索。",
+      ),
+      media(
+        urbanxCctv,
+        "Urban X surveillance monitor showing a figure standing on a school stairwell",
+        "Urban X 監視器畫面：一道人影站在校舍樓梯間",
+        "Surveillance footage extends the mystery beyond the player's immediate view.",
+        "監視器影像把謎團延伸到玩家視線之外。",
+      ),
+      media(
+        urbanxSettings,
+        "Urban X pause menu with controls and audio settings displayed on a handheld device",
+        "Urban X 暫停選單：手持裝置上顯示操作與音訊設定",
+        "The diegetic device keeps pause and settings controls inside the visual language of the game.",
+        "手持裝置讓暫停與設定介面延續遊戲中的視覺語言。",
+      ),
+    ],
     sections: [
       {
-        eyebrow: { en: "Narrative model", "zh-TW": "敘事模型" },
-        title: { en: "Content authored as data", "zh-TW": "把內容製作成資料" },
+        eyebrow: { en: "The experience", "zh-TW": "遊戲體驗" },
+        title: { en: "Investigate through the camera", "zh-TW": "透過攝影機展開調查" },
         body: {
-          en: "Dialogue is loaded from CSV and can trigger animation, variable changes, and restrictions on future choices. Writers can extend content without hard-coding each conversation into scene logic.",
-          "zh-TW": "對話由 CSV 載入，並可觸發動畫、變數變化與後續選項限制。編劇能擴充內容，而不需要把每段對話硬寫進場景邏輯。",
+          en: "Urban X is a first-person, single-player 3D exploration walking simulator. The player enters a high school abandoned after nine students disappeared, filming the environment to uncover what happened.",
+          "zh-TW": "Urban X 是第一人稱單人 3D 探索步行模擬遊戲。玩家進入一所因九名學生失蹤而荒廢的高中，透過拍攝環境逐步找出事件真相。",
         },
       },
       {
-        eyebrow: { en: "Simulation", "zh-TW": "模擬系統" },
-        title: { en: "Let state decide what can happen next", "zh-TW": "讓狀態決定下一步可能發生什麼" },
+        eyebrow: { en: "Timeline tooling", "zh-TW": "Timeline 工具" },
+        title: { en: "Author project-specific animation and events", "zh-TW": "製作專案專用動畫與事件" },
         body: {
-          en: "Player actions and stats feed an event system that evaluates conditions across activity, location, and time. Priority rules resolve competing events so the result remains consistent with the current world state.",
-          "zh-TW": "玩家行動與能力值會進入事件系統，依活動、地點與時段評估條件；優先序規則解決事件衝突，使結果與目前世界狀態一致。",
+          en: "I customized Unity Timeline so the team could sequence project-specific animations and gameplay events in one authoring workflow. This gave designers a clearer way to coordinate presentation and event timing without scattering that logic across scenes.",
+          "zh-TW": "我客製化 Unity Timeline，讓團隊能在同一套製作流程中編排專案專用動畫與遊戲事件。設計者因此能更清楚地協調演出與事件時機，不必把相關邏輯分散在各個場景。",
         },
       },
       {
-        eyebrow: { en: "Design outcome", "zh-TW": "設計成果" },
-        title: { en: "Choices create systems, not isolated branches", "zh-TW": "選擇形成系統，而非孤立分支" },
+        eyebrow: { en: "Persistence", "zh-TW": "持久化系統" },
+        title: { en: "Keep progress reliable across sessions", "zh-TW": "讓調查進度能可靠延續" },
         body: {
-          en: "A decision can affect immediate presentation, long-term variables, and future eligibility at once. The architecture turns narrative consequence into a reusable rule set instead of an expanding web of special cases.",
-          "zh-TW": "一次決定能同時影響眼前演出、長期變數與未來事件資格。這套架構把敘事後果變成可重用規則，而不是不斷膨脹的特殊分支。",
+          en: "I also implemented the save system, preserving player progress and the game state needed to resume the investigation. The system supports the exploratory structure by letting players leave and return without losing their place.",
+          "zh-TW": "我也負責實作存檔系統，保存玩家進度與恢復調查所需的遊戲狀態。這套系統支援探索式結構，讓玩家離開後仍能從原本位置繼續。",
         },
       },
     ],
+    externalLink: {
+      href: "https://elizabethcastreje.itch.io/urbanx",
+      label: { en: "View on itch.io", "zh-TW": "前往 itch.io" },
+    },
     accent: "violet",
   },
 ];

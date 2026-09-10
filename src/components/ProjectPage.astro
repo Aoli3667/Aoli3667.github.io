@@ -5,7 +5,6 @@ import { localePath, t, ui } from "../data/i18n";
 import type { Project } from "../data/projects";
 import { projects } from "../data/projects";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import ChoiceFlow from "./ChoiceFlow.astro";
 
 interface Props { project: Project; locale: Locale }
 const { project, locale } = Astro.props;
@@ -41,7 +40,11 @@ const alternatePath = localePath(isZh ? "en" : "zh-TW", `projects/${project.slug
       <ul class="tag-list" aria-label={copy.tools}>
         {project.tags.map((tag) => <li>{tag}</li>)}
       </ul>
-      {project.github && <a class="button-link" href={project.github}>{copy.github} <span aria-hidden="true">↗</span></a>}
+      {project.externalLink && (
+        <a class="button-link" href={project.externalLink.href}>
+          {t(project.externalLink.label, locale)} <span aria-hidden="true">↗</span>
+        </a>
+      )}
     </header>
 
     {project.cover && (
@@ -57,8 +60,6 @@ const alternatePath = localePath(isZh ? "en" : "zh-TW", `projects/${project.slug
         <figcaption>{t(project.cover.caption, locale)}</figcaption>
       </figure>
     )}
-
-    {project.slug === "choices" && <div class="shell"><ChoiceFlow locale={locale} /></div>}
 
     <div class="case-sections shell">
       {project.sections.map((section, index) => (
