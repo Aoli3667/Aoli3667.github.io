@@ -19,6 +19,8 @@ const required = [
   "zh/projects/urban-x/index.html",
   "404.html",
   "resume/Allan-Tsai-Resume-2025.pdf",
+  "media/slimey/slime-walk.gif",
+  "media/slimey/slime-attack.gif",
   "sitemap-index.xml",
   "robots.txt",
 ];

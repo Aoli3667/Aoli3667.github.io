@@ -47,7 +47,7 @@ const alternatePath = localePath(isZh ? "en" : "zh-TW", `projects/${project.slug
       )}
     </header>
 
-    {project.cover && (
+    {project.cover && typeof project.cover.src !== "string" && (
       <figure class="case-cover shell wide-shell">
         <Image
           src={project.cover.src}
@@ -85,7 +85,31 @@ const alternatePath = localePath(isZh ? "en" : "zh-TW", `projects/${project.slug
         <div class="gallery-grid">
           {project.media.map((item) => (
             <figure>
-              <Image src={item.src} alt={t(item.alt, locale)} widths={[600, 900, 1400, 2048]} sizes="(max-width: 760px) 100vw, 50vw" format="webp" loading="lazy" />
+              {typeof item.src === "string" ? (
+                <div class="animated-media">
+                  <img
+                    class="motion-source"
+                    src={item.src}
+                    alt={t(item.alt, locale)}
+                    width={item.width}
+                    height={item.height}
+                    loading="lazy"
+                  />
+                  {item.reducedMotionPoster && (
+                    <Image
+                      class="motion-fallback"
+                      src={item.reducedMotionPoster}
+                      alt={t(item.alt, locale)}
+                      widths={[600, 900]}
+                      sizes="(max-width: 760px) 100vw, 50vw"
+                      format="webp"
+                      loading="lazy"
+                    />
+                  )}
+                </div>
+              ) : (
+                <Image src={item.src} alt={t(item.alt, locale)} widths={[600, 900, 1400, 2048]} sizes="(max-width: 760px) 100vw, 50vw" format="webp" loading="lazy" />
+              )}
               <figcaption>{t(item.caption, locale)}</figcaption>
             </figure>
           ))}

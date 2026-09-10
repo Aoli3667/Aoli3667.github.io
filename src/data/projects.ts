@@ -6,6 +6,7 @@ import restartHold from "../assets/projects/restart-rhythm-hold.png";
 import restartEditor from "../assets/projects/restart-chart-editor.png";
 import slimeyWall from "../assets/projects/slimey-wall.png";
 import slimeyTraversal from "../assets/projects/slimey-traversal.png";
+import slimeyCover from "../assets/projects/slimey-cover.png";
 import egakuCharacter from "../assets/projects/egaku-character.png";
 import egakuRunner from "../assets/projects/egaku-runner.png";
 import egakuPainter from "../assets/projects/egaku-painter.png";
@@ -16,7 +17,10 @@ import urbanxSettings from "../assets/projects/urbanx-settings.png";
 export type ProjectSlug = "restart" | "slimey" | "egaku" | "urban-x";
 
 export interface ProjectMedia {
-  src: ImageMetadata;
+  src: ImageMetadata | string;
+  width?: number;
+  height?: number;
+  reducedMotionPoster?: ImageMetadata;
   alt: LocalizedText;
   caption: LocalizedText;
 }
@@ -45,7 +49,7 @@ export interface Project {
   accent: "cyan" | "yellow" | "coral" | "violet";
 }
 
-const media = (src: ImageMetadata, altEn: string, altZh: string, captionEn: string, captionZh: string): ProjectMedia => ({
+const media = (src: ImageMetadata | string, altEn: string, altZh: string, captionEn: string, captionZh: string): ProjectMedia => ({
   src,
   alt: { en: altEn, "zh-TW": altZh },
   caption: { en: captionEn, "zh-TW": captionZh },
@@ -116,10 +120,20 @@ export const projects: Project[] = [
     },
     role: { en: "Lead programmer", "zh-TW": "Lead Programmer" },
     tags: ["Unity", "C#", "Movement", "Object pooling", "UI systems"],
-    cover: media(slimeyTraversal, "Slimey traversing a green forest level between bright geometric platforms", "Slimey 在綠色森林關卡與明亮幾何平台之間移動", "Traversal asks the player to read every surface as a possible path.", "移動設計讓每個表面都可能成為路徑。"),
+    cover: media(slimeyCover, "Slimey clinging to a vertical metal wall in a layered forest level", "Slimey 在森林關卡中附著於垂直金屬牆面", "Traversal asks the player to read every surface as a possible path.", "移動設計讓每個表面都可能成為路徑。"),
     media: [
-      media(slimeyWall, "Slimey attached to a vertical platform in a forest level", "Slimey 附著在森林關卡的垂直平台上", "Wall attachment changes both gravity and the player's frame of reference.", "貼牆機制同時改變重力與玩家的方向感。"),
-      media(slimeyTraversal, "Slimey navigating among circular and rectangular obstacles", "Slimey 在圓形與矩形障礙物之間移動", "Curved surfaces and varied angles turn movement into the central puzzle.", "曲面與不同角度讓移動本身成為主要謎題。"),
+      {
+        ...media("/media/slimey/slime-walk.gif", "Animated Slimey gameplay demonstrating wall attachment and traversal", "Slimey 動態遊戲畫面，展示貼牆與移動機制", "Wall attachment changes both gravity and the player's frame of reference.", "貼牆機制同時改變重力與玩家的方向感。"),
+        width: 426,
+        height: 240,
+        reducedMotionPoster: slimeyWall,
+      },
+      {
+        ...media("/media/slimey/slime-attack.gif", "Animated Slimey gameplay demonstrating elemental attacks", "Slimey 動態遊戲畫面，展示元素攻擊", "Elemental forms turn collected forces of nature into distinct attacks.", "元素形態把收集到的自然力量轉化為不同攻擊。"),
+        width: 426,
+        height: 240,
+        reducedMotionPoster: slimeyTraversal,
+      },
     ],
     sections: [
       {

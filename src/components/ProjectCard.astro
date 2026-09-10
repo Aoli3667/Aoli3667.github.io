@@ -15,7 +15,7 @@ const copy = ui[locale];
 
 <a class:list={["project-card", `accent-${project.accent}`]} href={localePath(locale, `projects/${project.slug}/`)}>
   <div class="project-card-media">
-    {project.cover ? (
+    {project.cover && typeof project.cover.src !== "string" ? (
       <Image
         src={project.cover.src}
         alt={t(project.cover.alt, locale)}
