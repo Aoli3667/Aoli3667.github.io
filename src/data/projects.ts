@@ -42,10 +42,10 @@ export interface Project {
   cover?: ProjectMedia;
   media: ProjectMedia[];
   sections: ProjectSection[];
-  externalLink?: {
+  externalLinks?: Array<{
     href: string;
     label: LocalizedText;
-  };
+  }>;
   accent: "cyan" | "yellow" | "coral" | "violet";
 }
 
@@ -107,6 +107,12 @@ export const projects: Project[] = [
         },
       },
     ],
+    externalLinks: [
+      {
+        href: "https://www.youtube.com/watch?v=LEriG8Voa5U",
+        label: { en: "Watch on YouTube", "zh-TW": "在 YouTube 觀看" },
+      },
+    ],
     accent: "cyan",
   },
   {
@@ -161,10 +167,12 @@ export const projects: Project[] = [
         },
       },
     ],
-    externalLink: {
-      href: "https://github.com/Aoli3667/Slimey",
-      label: { en: "View on GitHub", "zh-TW": "前往 GitHub" },
-    },
+    externalLinks: [
+      {
+        href: "https://github.com/Aoli3667/Slimey",
+        label: { en: "View on GitHub", "zh-TW": "前往 GitHub" },
+      },
+    ],
     accent: "yellow",
   },
   {
@@ -208,6 +216,16 @@ export const projects: Project[] = [
           en: "Mouse input is sampled into a runtime mesh that grows with the painter's stroke. Tool variants alter thickness, mass, gravity, and interactions, creating a small design language rather than a single all-purpose bridge.",
           "zh-TW": "滑鼠輸入會被取樣為隨筆畫成長的 Runtime Mesh。不同工具會改變粗細、質量、重力與互動，形成一套小型設計語言，而不只是萬用橋樑。",
         },
+      },
+    ],
+    externalLinks: [
+      {
+        href: "https://shengjz9.wixsite.com/egaku",
+        label: { en: "Visit project site", "zh-TW": "查看專案網站" },
+      },
+      {
+        href: "https://nagisadango.itch.io/egaku",
+        label: { en: "Play on itch.io", "zh-TW": "在 itch.io 遊玩" },
       },
     ],
     accent: "coral",
@@ -279,10 +297,12 @@ export const projects: Project[] = [
         },
       },
     ],
-    externalLink: {
-      href: "https://elizabethcastreje.itch.io/urbanx",
-      label: { en: "View on itch.io", "zh-TW": "前往 itch.io" },
-    },
+    externalLinks: [
+      {
+        href: "https://elizabethcastreje.itch.io/urbanx",
+        label: { en: "View on itch.io", "zh-TW": "前往 itch.io" },
+      },
+    ],
     accent: "violet",
   },
 ];

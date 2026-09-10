@@ -40,10 +40,14 @@ const alternatePath = localePath(isZh ? "en" : "zh-TW", `projects/${project.slug
       <ul class="tag-list" aria-label={copy.tools}>
         {project.tags.map((tag) => <li>{tag}</li>)}
       </ul>
-      {project.externalLink && (
-        <a class="button-link" href={project.externalLink.href}>
-          {t(project.externalLink.label, locale)} <span aria-hidden="true">↗</span>
-        </a>
+      {project.externalLinks && (
+        <div class="project-links">
+          {project.externalLinks.map((link) => (
+            <a class="button-link" href={link.href}>
+              {t(link.label, locale)} <span aria-hidden="true">↗</span>
+            </a>
+          ))}
+        </div>
       )}
     </header>
 
