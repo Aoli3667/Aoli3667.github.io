@@ -1,0 +1,29 @@
+---
+import type { Locale } from "../data/i18n";
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const isZh = locale === "zh-TW";
+---
+
+<figure class="choice-flow" aria-labelledby="choice-flow-caption">
+  <div class="flow-stage flow-choice">
+    <small>{isZh ? "玩家輸入" : "PLAYER INPUT"}</small>
+    <strong>{isZh ? "做出選擇" : "Make a choice"}</strong>
+    <div class="direction-pad" aria-hidden="true"><span>↑</span><span>←</span><span>→</span><span>↓</span></div>
+  </div>
+  <span class="flow-arrow" aria-hidden="true">→</span>
+  <div class="flow-stage">
+    <small>{isZh ? "規則" : "RULES"}</small>
+    <strong>{isZh ? "條件與優先序" : "Conditions & priority"}</strong>
+    <p>{isZh ? "地點 · 時間 · 數值" : "Location · Time · Stats"}</p>
+  </div>
+  <span class="flow-arrow" aria-hidden="true">→</span>
+  <div class="flow-stage flow-result">
+    <small>{isZh ? "結果" : "OUTCOME"}</small>
+    <strong>{isZh ? "事件與故事變化" : "Events & story change"}</strong>
+    <p>{isZh ? "對話 · 動畫 · 可用選項" : "Dialogue · Animation · Choices"}</p>
+  </div>
+  <figcaption id="choice-flow-caption">
+    {isZh ? "Choices 的資料流程示意圖（非遊戲截圖）" : "A system diagram for Choices — not a gameplay screenshot"}
+  </figcaption>
+</figure>

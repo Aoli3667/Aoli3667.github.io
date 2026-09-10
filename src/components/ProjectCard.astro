@@ -1,0 +1,47 @@
+---
+import { Image } from "astro:assets";
+import type { Locale } from "../data/i18n";
+import { localePath, t, ui } from "../data/i18n";
+import type { Project } from "../data/projects";
+
+interface Props {
+  project: Project;
+  locale: Locale;
+}
+
+const { project, locale } = Astro.props;
+const copy = ui[locale];
+---
+
+<a class:list={["project-card", `accent-${project.accent}`]} href={localePath(locale, `projects/${project.slug}/`)}>
+  <div class="project-card-media">
+    {project.cover ? (
+      <Image
+        src={project.cover.src}
+        alt={t(project.cover.alt, locale)}
+        widths={[480, 720, 960]}
+        sizes="(max-width: 720px) 100vw, 50vw"
+        format="webp"
+        loading={project.index === "01" ? "eager" : "lazy"}
+      />
+    ) : (
+      <div class="choice-mini" aria-hidden="true">
+        <span>?</span>
+        <i>↑</i><i>→</i><i>↓</i><i>←</i>
+      </div>
+    )}
+    <span class="project-number">{project.index}</span>
+  </div>
+  <div class="project-card-body">
+    <p class="eyebrow">{t(project.eyebrow, locale)}</p>
+    <div class="card-heading">
+      <h3>{project.title}</h3>
+      <span class="card-arrow" aria-hidden="true">↗</span>
+    </div>
+    <p>{t(project.summary, locale)}</p>
+    <div class="card-meta">
+      <span>{t(project.role, locale)}</span>
+      <span class="open-label">{copy.viewProject}</span>
+    </div>
+  </div>
+</a>

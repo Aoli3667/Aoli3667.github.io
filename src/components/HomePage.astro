@@ -1,0 +1,68 @@
+---
+import type { Locale } from "../data/i18n";
+import { localePath, ui } from "../data/i18n";
+import { experiments, projects } from "../data/projects";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProjectCard from "./ProjectCard.astro";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const copy = ui[locale];
+const isZh = locale === "zh-TW";
+---
+
+<BaseLayout
+  locale={locale}
+  title={isZh ? "Allan Tsai — 玩法程式設計師與遊戲設計師" : "Allan Tsai — Gameplay Programmer & Game Designer"}
+  description={isZh ? "Allan Tsai 的雙語遊戲開發作品集，專注玩法程式、工具與系統設計。" : "Allan Tsai's game development portfolio, focused on gameplay programming, tools, and systems design."}
+  canonicalPath={localePath(locale)}
+  alternatePath={localePath(isZh ? "en" : "zh-TW")}
+>
+  <section class="hero shell">
+    <div class="hero-copy">
+      <p class="hero-kicker">{isZh ? "HELLO，我是 ALLAN" : "HELLO, I'M ALLAN"}</p>
+      <h1>
+        {isZh ? "我把有趣的玩法，" : "I turn playful ideas"}<br />
+        <span>{isZh ? "做成可靠的系統。" : "into reliable systems."}</span>
+      </h1>
+      <p class="hero-intro">
+        {isZh
+          ? "Gameplay Programmer 與 Game Designer，目前就讀 USC Computer Science (Game Development) 碩士。我喜歡打造手感、工具，以及讓設計師能持續創作的系統。"
+          : "Gameplay programmer and game designer currently pursuing an M.S. in Computer Science (Game Development) at USC. I build game feel, creator tools, and systems that give design room to grow."}
+      </p>
+    </div>
+    <div class="hero-toy" aria-hidden="true">
+      <div class="orbit orbit-one"></div>
+      <div class="orbit orbit-two"></div>
+      <div class="hit-circle">A</div>
+      <div class="key-cluster"><span>W</span><span>A</span><span>S</span><span>D</span></div>
+    </div>
+    <a class="scroll-cue" href="#work"><span>↓</span>{isZh ? "查看作品" : "Selected work"}</a>
+  </section>
+
+  <section class="work-section shell" id="work">
+    <div class="section-heading">
+      <p class="eyebrow">{isZh ? "四個案例，兩種視角" : "FOUR CASES, TWO DISCIPLINES"}</p>
+      <h2>{copy.projects}</h2>
+    </div>
+    <div class="project-grid">
+      {projects.map((project) => <ProjectCard project={project} locale={locale} />)}
+    </div>
+  </section>
+
+  <section class="experiments shell" aria-labelledby="experiments-heading">
+    <div>
+      <p class="eyebrow">SIDE QUESTS</p>
+      <h2 id="experiments-heading">{copy.more}</h2>
+    </div>
+    <div class="experiment-links">
+      {experiments.map((item) => (
+        <a href={item.href}>
+          <span>{item.name}</span>
+          <small>{item.note}</small>
+          <b aria-hidden="true">↗</b>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

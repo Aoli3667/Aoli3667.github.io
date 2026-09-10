@@ -1,0 +1,66 @@
+---
+import "../styles/global.css";
+import type { Locale } from "../data/i18n";
+import { localePath, ui } from "../data/i18n";
+
+interface Props {
+  locale: Locale;
+  title: string;
+  description: string;
+  canonicalPath: string;
+  alternatePath: string;
+}
+
+const { locale, title, description, canonicalPath, alternatePath } = Astro.props;
+const copy = ui[locale];
+const englishPath = locale === "en" ? canonicalPath : alternatePath;
+const chinesePath = locale === "zh-TW" ? canonicalPath : alternatePath;
+const canonical = new URL(canonicalPath, Astro.site);
+---
+
+<!doctype html>
+<html lang={locale === "zh-TW" ? "zh-Hant" : "en"}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0b1020" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en" href={new URL(englishPath, Astro.site)} />
+    <link rel="alternate" hreflang="zh-Hant" href={new URL(chinesePath, Astro.site)} />
+    <link rel="alternate" hreflang="x-default" href={new URL(englishPath, Astro.site)} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{locale === "en" ? "Skip to content" : "跳到主要內容"}</a>
+    <header class="site-header">
+      <nav class="nav shell" aria-label={locale === "en" ? "Primary navigation" : "主要導覽"}>
+        <a class="brand" href={localePath(locale)} aria-label="Allan Tsai — Home">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
+          <span>ALLAN TSAI</span>
+        </a>
+        <div class="nav-links">
+          <a href={localePath(locale)}>{copy.home}</a>
+          <a href={localePath(locale, "about/")}>{copy.about}</a>
+          <a class="lang-switch" href={alternatePath} lang={locale === "en" ? "zh-Hant" : "en"}>
+            <span aria-hidden="true">↔</span> {copy.alternateLang}
+          </a>
+        </div>
+      </nav>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="site-footer shell">
+      <div>
+        <p class="footer-name">Allan Tsai</p>
+        <p>{locale === "en" ? "Gameplay Programmer & Game Designer" : "玩法程式設計師與遊戲設計師"}</p>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/Aoli3667" rel="me">GitHub ↗</a>
+        <a href="/resume/Allan-Tsai-Resume-2025.pdf">{copy.resume} ↓</a>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,84 @@
+---
+import type { Locale } from "../data/i18n";
+import { localePath, ui } from "../data/i18n";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const copy = ui[locale];
+const isZh = locale === "zh-TW";
+---
+
+<BaseLayout
+  locale={locale}
+  title={isZh ? "關於 Allan Tsai" : "About Allan Tsai"}
+  description={isZh ? "Allan Tsai 的教育、遊戲開發經歷與技術能力。" : "Allan Tsai's education, game development experience, and technical toolkit."}
+  canonicalPath={localePath(locale, "about/")}
+  alternatePath={localePath(isZh ? "en" : "zh-TW", "about/")}
+>
+  <article class="about-page shell">
+    <header class="about-hero">
+      <p class="eyebrow">{isZh ? "關於我 · ABOUT ME" : "ABOUT ME · 關於我"}</p>
+      <h1>{isZh ? "我喜歡站在玩法與技術之間。" : "I like working where play meets technology."}</h1>
+      <div class="about-lede">
+        <p>
+          {isZh
+            ? "我是 Allan，一名 Gameplay Programmer 與 Game Designer。我享受把模糊的遊戲想法拆解成清楚、可測試、可以繼續擴充的系統。"
+            : "I'm Allan, a gameplay programmer and game designer. I enjoy turning fuzzy game ideas into systems that are clear, testable, and ready to grow."}
+        </p>
+        <p>
+          {isZh
+            ? "目前就讀 University of Southern California 的 Computer Science (Game Development) 理學碩士，持續研究遊戲系統、製作工具與互動體驗。"
+            : "I'm currently pursuing an M.S. in Computer Science (Game Development) at the University of Southern California, continuing to explore game systems, creator tools, and interactive experiences."}
+        </p>
+      </div>
+      <div class="about-actions">
+        <a class="button-link" href="https://github.com/Aoli3667">GitHub <span aria-hidden="true">↗</span></a>
+        <a class="button-link secondary" href="/resume/Allan-Tsai-Resume-2025.pdf">{copy.resume} <span aria-hidden="true">↓</span></a>
+      </div>
+      <p class="resume-note">{copy.currentNote}</p>
+    </header>
+
+    <section class="timeline" aria-labelledby="experience-heading">
+      <div class="section-heading">
+        <p class="eyebrow">{isZh ? "學習與實作" : "LEARNING BY BUILDING"}</p>
+        <h2 id="experience-heading">{isZh ? "經歷" : "Experience"}</h2>
+      </div>
+      <ol>
+        <li>
+          <span class="timeline-dot"></span>
+          <div class="timeline-meta"><strong>University of Southern California</strong><small>{isZh ? "目前" : "Current"}</small></div>
+          <div><h3>M.S. Computer Science (Game Development)</h3><p>{isZh ? "持續深化遊戲程式、即時系統與互動設計。" : "Deepening my work in game programming, real-time systems, and interactive design."}</p></div>
+        </li>
+        <li>
+          <span class="timeline-dot"></span>
+          <div class="timeline-meta"><strong>Tencent Lightspeed Studio</strong><small>2025</small></div>
+          <div><h3>{isZh ? "Game Client Programmer Intern" : "Game Client Programmer Intern"}</h3><p>{isZh ? "在未公開的 Unreal Engine 5 專案中，以 C++ 與 Blueprint 開發玩法功能、資料驅動工具及可擴充的能力取得架構。" : "Built gameplay features, data-driven tools, and a scalable ability-acquisition architecture with C++ and Blueprints on an unreleased Unreal Engine 5 project."}</p></div>
+        </li>
+        <li>
+          <span class="timeline-dot"></span>
+          <div class="timeline-meta"><strong>University of California, Irvine</strong><small>2025</small></div>
+          <div><h3>Game Design Learning Assistant</h3><p>{isZh ? "協助教授 Unity 與 C# 遊戲程式基礎，以提問與實作引導學生建立自己的解法。" : "Support students learning Unity and C# fundamentals through hands-on problem solving and questions that help them form their own solutions."}</p></div>
+        </li>
+        <li>
+          <span class="timeline-dot"></span>
+          <div class="timeline-meta"><strong>University of California, Irvine</strong><small>2022–2026</small></div>
+          <div><h3>B.A. Game Design & Interactive Media</h3><p>{isZh ? "輔修 Information and Computer Science，GPA 3.858。" : "Minor in Information and Computer Science · GPA 3.858."}</p></div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="toolkit" aria-labelledby="toolkit-heading">
+      <div>
+        <p class="eyebrow">{isZh ? "我的工具箱" : "MY TOOLKIT"}</p>
+        <h2 id="toolkit-heading">{isZh ? "我用什麼製作" : "What I build with"}</h2>
+      </div>
+      <ul>
+        <li><span>01</span><strong>Unity · C#</strong><p>{isZh ? "玩法系統、Editor 工具、資料流程與效能思維" : "Gameplay systems, editor tools, data pipelines, and performance-minded architecture"}</p></li>
+        <li><span>02</span><strong>Unreal Engine · C++</strong><p>{isZh ? "GAS、Behavior Tree、UMG、Common UI 與設計師工具" : "GAS, Behavior Trees, UMG, Common UI, and designer-facing tools"}</p></li>
+        <li><span>03</span><strong>Python · Lua</strong><p>{isZh ? "快速原型、資料轉換與輕量自動化" : "Rapid prototypes, data conversion, and lightweight automation"}</p></li>
+        <li><span>04</span><strong>Figma · Twine</strong><p>{isZh ? "互動流程、UI 原型與分支敘事" : "Interaction flows, interface prototypes, and branching narrative"}</p></li>
+      </ul>
+    </section>
+  </article>
+</BaseLayout>

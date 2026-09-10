@@ -1,0 +1,101 @@
+---
+import { Image } from "astro:assets";
+import type { Locale } from "../data/i18n";
+import { localePath, t, ui } from "../data/i18n";
+import type { Project } from "../data/projects";
+import { projects } from "../data/projects";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ChoiceFlow from "./ChoiceFlow.astro";
+
+interface Props { project: Project; locale: Locale }
+const { project, locale } = Astro.props;
+const copy = ui[locale];
+const isZh = locale === "zh-TW";
+const currentIndex = projects.findIndex((item) => item.slug === project.slug);
+const nextProject = projects[(currentIndex + 1) % projects.length];
+const currentPath = localePath(locale, `projects/${project.slug}/`);
+const alternatePath = localePath(isZh ? "en" : "zh-TW", `projects/${project.slug}/`);
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${project.title} — Allan Tsai`}
+  description={t(project.summary, locale)}
+  canonicalPath={currentPath}
+  alternatePath={alternatePath}
+>
+  <article class:list={["case-study", `accent-${project.accent}`]}>
+    <header class="case-hero shell">
+      <a class="back-link" href={localePath(locale, "#work")}>← {copy.back}</a>
+      <div class="case-title-row">
+        <div>
+          <p class="eyebrow">{project.index} · {t(project.eyebrow, locale)}</p>
+          <h1>{project.title}</h1>
+        </div>
+        <div class="case-role">
+          <small>{copy.role}</small>
+          <strong>{t(project.role, locale)}</strong>
+        </div>
+      </div>
+      <p class="case-summary">{t(project.summary, locale)}</p>
+      <ul class="tag-list" aria-label={copy.tools}>
+        {project.tags.map((tag) => <li>{tag}</li>)}
+      </ul>
+      {project.github && <a class="button-link" href={project.github}>{copy.github} <span aria-hidden="true">↗</span></a>}
+    </header>
+
+    {project.cover && (
+      <figure class="case-cover shell wide-shell">
+        <Image
+          src={project.cover.src}
+          alt={t(project.cover.alt, locale)}
+          widths={[720, 1080, 1600, 2048]}
+          sizes="(max-width: 900px) 100vw, 90vw"
+          format="webp"
+          loading="eager"
+        />
+        <figcaption>{t(project.cover.caption, locale)}</figcaption>
+      </figure>
+    )}
+
+    {project.slug === "choices" && <div class="shell"><ChoiceFlow locale={locale} /></div>}
+
+    <div class="case-sections shell">
+      {project.sections.map((section, index) => (
+        <section class="case-section">
+          <div class="case-section-label">
+            <span>{String(index + 1).padStart(2, "0")}</span>
+            <p class="eyebrow">{t(section.eyebrow, locale)}</p>
+          </div>
+          <div>
+            <h2>{t(section.title, locale)}</h2>
+            <p>{t(section.body, locale)}</p>
+          </div>
+        </section>
+      ))}
+    </div>
+
+    {project.media.length > 0 && (
+      <section class="gallery shell wide-shell" aria-labelledby="gallery-heading">
+        <div class="section-heading">
+          <p class="eyebrow">{isZh ? "從玩法到工具" : "FROM PLAY TO TOOLS"}</p>
+          <h2 id="gallery-heading">{copy.gallery}</h2>
+        </div>
+        <div class="gallery-grid">
+          {project.media.map((item) => (
+            <figure>
+              <Image src={item.src} alt={t(item.alt, locale)} widths={[600, 900, 1400, 2048]} sizes="(max-width: 760px) 100vw, 50vw" format="webp" loading="lazy" />
+              <figcaption>{t(item.caption, locale)}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <a class="next-project shell" href={localePath(locale, `projects/${nextProject.slug}/`)}>
+      <span>{copy.next}</span>
+      <strong>{nextProject.title}</strong>
+      <b aria-hidden="true">→</b>
+    </a>
+  </article>
+</BaseLayout>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aoli3667.github.io/sitemap-index.xml
