@@ -64,9 +64,6 @@ h1, h2, h3, strong { line-height: 1.08; }
 .orbit { position: absolute; border: 2px dashed; border-radius: 50%; }
 .orbit-one { inset: 35px; border-color: var(--cyan); animation: orbit-in 2.4s cubic-bezier(.2,.8,.2,1) infinite; }
 .orbit-two { inset: 4px; border-color: var(--yellow); opacity: .55; animation: orbit-in 2.4s .15s cubic-bezier(.2,.8,.2,1) infinite; }
-.key-cluster { position: absolute; right: 0; bottom: 0; display: grid; grid-template-columns: repeat(3, 37px); gap: 5px; transform: rotate(4deg); }
-.key-cluster span { display: grid; place-items: center; aspect-ratio: 1; border: 1px solid var(--line); border-bottom-width: 4px; border-radius: 7px; background: var(--ink-soft); font-size: .72rem; font-weight: 900; }
-.key-cluster span:first-child { grid-column: 2; }
 .scroll-cue { position: absolute; left: 0; bottom: 34px; display: flex; align-items: center; gap: 11px; color: var(--muted); font-size: .78rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
 .scroll-cue span { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--line); border-radius: 50%; color: var(--yellow); }
 
