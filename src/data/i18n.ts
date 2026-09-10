@@ -17,8 +17,8 @@ export const ui = {
     gallery: "Project gallery",
     next: "Next project",
     github: "View on GitHub",
-    resume: "Resume — 2025 edition",
-    currentNote: "This archived resume predates my current graduate studies at USC.",
+    resume: "Resume — 2026 edition",
+    currentNote: "This resume was built on 09/2026",
     back: "Back to selected work",
   },
   "zh-TW": {
@@ -35,8 +35,8 @@ export const ui = {
     gallery: "專案畫面",
     next: "下一個專案",
     github: "前往 GitHub",
-    resume: "履歷 — 2025 版本",
-    currentNote: "此封存履歷早於我目前在 USC 的研究所學業。",
+    resume: "履歷 — 2026 版本",
+    currentNote: "此履歷是09/2026的",
     back: "回到精選作品",
   },
 } as const;
